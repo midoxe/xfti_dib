@@ -6,9 +6,29 @@
     <title>Result</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
+            const userId = new URLSearchParams(window.location.search).get('user_id');
             const points = localStorage.getItem('points');
-            document.getElementById('points').innerText = `You have won ${points} points!`;
+
+            if (userId) {
+                // Update the score on the server
+                await fetch('http://localhost:8080/update_score', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user_id: userId, score: parseInt(points) })
+                });
+
+                // Retrieve the highest score
+                const response = await fetch(`http://localhost:8080/get_score?user_id=${userId}`);
+                const data = await response.json();
+                const highestScore = data.highest_score;
+
+                document.getElementById('points').innerText = `You have won ${points} points! Your highest score is ${highestScore} points!`;
+            } else {
+                document.getElementById('points').innerText = `You have won ${points} points!`;
+            }
         });
     </script>
 </head>
