@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function answerQuestion() {
+            let points;
+            const randomNum = Math.random() * 100;
+
+            if (randomNum < 60) {
+                points = Math.floor(Math.random() * 9) + 1; // 1-9
+            } else if (randomNum < 90) {
+                points = Math.floor(Math.random() * 90) + 10; // 10-99
+            } else if (randomNum < 99) {
+                points = Math.floor(Math.random() * 900) + 100; // 100-999
+            } else {
+                points = Math.floor(Math.random() * 999001) + 999; // 999-999999
+            }
+
+            localStorage.setItem('points', points);
+            location.href = 'result.html';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Daba ila tla9iti m3a Dib : Wax ?</h1>
+        <button onclick="answerQuestion()">thlha lih</button>
+        <button onclick="answerQuestion()">yhlha lik</button>
+    </div>
+</body>
+</html>
